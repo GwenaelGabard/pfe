@@ -134,6 +134,5 @@ from .cbc import CBC
 from .impedance import Impedance
 from .velocity import Velocity
 from .duct_modes import DuctModes
-from .brambley import ImpedanceB
 
-__all__ = ["Main", "Wall", "CBC", "Impedance", "Velocity", "DuctModes", "ImpedanceB"]
+__all__ = ["Main", "Wall", "CBC", "Impedance", "Velocity", "DuctModes"]
