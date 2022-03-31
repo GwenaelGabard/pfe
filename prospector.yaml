@@ -1,0 +1,21 @@
+strictness: high
+
+pylint:
+  options:
+    max-locals: 40
+    max-args: 10
+  disable:
+    - invalid-name
+
+pep8:
+  disable:
+    - N802
+    - N806
+
+pep257:
+  disable:
+    - D213
+    - D203
+    - D212
+    - D205
+    - D415
