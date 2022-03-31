@@ -7,8 +7,8 @@ It is intended mostly for teaching and basic research.
 
 To install the module you can run
 ```bash
-python -m build
-pip install --force --find-links=dist pfe
+python setup.py create_tables
+python setup.py install
 ```
 
 ## Documentation
