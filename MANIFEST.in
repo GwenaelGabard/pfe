@@ -1,0 +1,2 @@
+include pfe/quadrature/*.npy
+include pfe/shape/*.npy
