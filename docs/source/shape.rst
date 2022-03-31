@@ -1,0 +1,2 @@
+.. automodule:: pfe.shape
+   :members:

@@ -1,0 +1,2 @@
+.. automodule:: pfe.quadrature
+   :members:

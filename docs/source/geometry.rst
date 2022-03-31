@@ -1,0 +1,2 @@
+.. automodule:: pfe.geometry
+   :members:
