@@ -4,3 +4,4 @@ __pycache__
 *.npy
 dist
 pfe.egg-info
+build
