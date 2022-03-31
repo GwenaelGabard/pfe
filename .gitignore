@@ -2,3 +2,5 @@ __pycache__
 *.pyc
 .DS_Store
 *.npy
+dist
+pfe.egg-info
