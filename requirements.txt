@@ -1,0 +1,6 @@
+scipy>=1.7
+matplotlib>=3.4
+numpy>=1.20
+numba>=0.53
+gmsh>=4.8
+furo
