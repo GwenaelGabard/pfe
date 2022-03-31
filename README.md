@@ -1,6 +1,7 @@
 # Python Finite Elements
 
 This is a generic package to create finite element models.
+It is intended mostly for teaching and basic research.
 
 ## Installation
 
