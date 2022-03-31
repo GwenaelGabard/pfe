@@ -16,7 +16,8 @@ def make_T6(max_order, filename):
         S = T6.S(uv)
         dSdu, dSdv = T6.dS(uv)
         table.append((S, dSdu, dSdv))
-    np.save(filename, table, allow_pickle=True)
+    data = np.array(table, dtype=object)
+    np.save(filename, data, allow_pickle=True)
 
 
 if __name__ == "__main__":

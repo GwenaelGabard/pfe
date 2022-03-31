@@ -30,7 +30,8 @@ def make_line(max_order, filename):
         u, weight = line_quad(order)
         u = u[None, :]
         table.append((u, weight))
-    np.save(filename, table, allow_pickle=True)
+    data = np.array(table, dtype=object)
+    np.save(filename, data, allow_pickle=True)
 
 
 def triangle_quad(order):
@@ -68,7 +69,8 @@ def make_triangle(max_order, filename):
     for order in range(max_order):
         uv, weight = triangle_quad(order)
         table.append((uv, weight))
-    np.save(filename, table, allow_pickle=True)
+    data = np.array(table, dtype=object)
+    np.save(filename, data, allow_pickle=True)
 
 
 if __name__ == "__main__":
