@@ -3,3 +3,4 @@ furo
 numpy
 gmsh
 scipy
+matplotlib
