@@ -4,3 +4,4 @@ numpy
 gmsh
 scipy
 matplotlib
+numba
