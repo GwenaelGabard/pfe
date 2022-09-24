@@ -137,7 +137,6 @@ class DuctModes:
         D = squareform(pdist(nodes.T))
         n1, n2 = np.unravel_index(np.argmax(D), D.shape)
         self.basis.xc = (nodes[:, n1] + nodes[:, n2]) / 2
-        print(self.basis.xc)
 
     def assemble(self, model, system):
         """Assemble the element matrices
