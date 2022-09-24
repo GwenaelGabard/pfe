@@ -32,7 +32,7 @@ setup(
     license = "MIT",
     keywords = "finite element, numerical simulation, computational modelling",
     url = "https://github.com/GwenaelGabard/pfe",
-    packages=['pfe'],
+    packages=['pfe', 'pfe.geometry', 'pfe.shape', 'pfe.quadrature', 'pfe.algebra', 'pfe.interpolation', 'pfe.models'],
     long_description=read('README.md'),
     classifiers=[
         "Development Status :: 3 - Alpha",
