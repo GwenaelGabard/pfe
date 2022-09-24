@@ -103,7 +103,7 @@ class CBC:
         u0tau = u0 * tau[:, 0] + v0 * tau[:, 1]
         u0n = u0 * n[:, 0] + v0 * n[:, 1]
         Ke = -phi.T @ (
-            (weights * rho0 * u0n * u0tau / c0 ** 2)[:, None] * dphidtau
+            (weights * rho0 * u0n * u0tau / c0**2)[:, None] * dphidtau
         ) - phi.T @ ((weights * rho0 * 1j * omega / c0)[:, None] * phi)
         Fe = -phi.T @ ((weights * rho0 * (1 - (u0n / c0) ** 2)) * g)
         return (Ke, Fe)

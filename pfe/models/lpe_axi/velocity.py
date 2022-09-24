@@ -75,7 +75,7 @@ class Velocity:
         u, weights = geometry.integration(2 * basis.order)
         xr = geometry.position(u)
         _, r = xr
-        weights *= 2*np.pi*r
+        weights *= 2 * np.pi * r
         phi = basis.S(u)
         rho0 = model.parameters["rho0"].get_value(e, u, xr)
         V = self.velocity.get_value(e, u, xr)

@@ -104,7 +104,7 @@ class CBC:
         u0tau = u0 * tau[:, 0] + v0 * tau[:, 1]
         u0n = u0 * n[:, 0] + v0 * n[:, 1]
         Ke = (
-            -phi.T @ np.diag(weights * rho0 * u0n * u0tau / c0 ** 2) @ dphidtau
+            -phi.T @ np.diag(weights * rho0 * u0n * u0tau / c0**2) @ dphidtau
             - phi.T @ np.diag(weights * rho0 * 1j * omega / c0) @ phi
         )
         Fe = -phi.T @ np.diag(weights * rho0 * (1 - (u0n / c0) ** 2)) @ g

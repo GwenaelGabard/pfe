@@ -84,5 +84,5 @@ class Impedance:
         Z = self.Z.get_value(e, u, xy)
         u0tau = u0 * tau[:, 0] + v0 * tau[:, 1]
         D0phiDt = 1j * omega * phi + np.diag(u0tau) @ dphidtau
-        Ke = D0phiDt.T.conj() @ np.diag(weights * rho0 ** 2 / Z / 1j / omega) @ D0phiDt
+        Ke = D0phiDt.T.conj() @ np.diag(weights * rho0**2 / Z / 1j / omega) @ D0phiDt
         return Ke

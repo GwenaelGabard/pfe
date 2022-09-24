@@ -83,8 +83,8 @@ class Terms:
 
 
 class Constraint:
-    """A linear constraint to impose on the linear system
-    """
+    """A linear constraint to impose on the linear system"""
+
     def __init__(self, dof, coef, rhs):
         """Default constructor
 
@@ -154,7 +154,7 @@ class LinearSystem:
         :param rhs: rhs value of the constraint, defaults to 0.0
         :type rhs: float or complex, optional
         """
-        self.constraints.append(Constraint(dof,coef,rhs))
+        self.constraints.append(Constraint(dof, coef, rhs))
 
     def assemble(self):
         """Assemble the left- and right-hand sides of the system"""
@@ -201,15 +201,15 @@ class LinearSystem:
         t = Terms()
         d = []
         for n, c in enumerate(self.constraints):
-            t.add([n]*len(c.dof), c.dof, c.coef)
+            t.add([n] * len(c.dof), c.dof, c.coef)
             d.append(c.rhs)
-        C = t.matrix().tocsr()[:,nc].toarray()
+        C = t.matrix().tocsr()[:, nc].toarray()
         d = np.array(d)
         # QR factorization of C
-        Q, R = qr(C.T, 'complete')
-        Q2 = Q[:,m:]
+        Q, R = qr(C.T, "complete")
+        Q2 = Q[:, m:]
         # Solve for the constrained subspace
-        x1 = Q[:,:m]@solve(R[:m,:].T, d)
+        x1 = Q[:, :m] @ solve(R[:m, :].T, d)
         # Assemble the lhs and rhs of the system
         A = self.lhs.matrix().tocsr()
         A.resize((self.num_dofs, self.num_dofs))
@@ -219,14 +219,16 @@ class LinearSystem:
         # Build the reduced linear system (without the constrained subspace)
         Afc = A[np.ix_(nf, nc)]
         Acc = A[np.ix_(nc, nc)]
-        A2 = bmat([[Q2.T@Acc@Q2, Q2.T@A[np.ix_(nc, nf)]], [Afc@Q2, A[np.ix_(nf, nf)]]]).tocsc()
-        b2 = Q2.T@(b[nc]-Acc@x1)
-        bf = b[nf] - Afc@x1
-        bc = np.vstack((b2[:,None],bf[:,None]))
+        A2 = bmat(
+            [[Q2.T @ Acc @ Q2, Q2.T @ A[np.ix_(nc, nf)]], [Afc @ Q2, A[np.ix_(nf, nf)]]]
+        ).tocsc()
+        b2 = Q2.T @ (b[nc] - Acc @ x1)
+        bf = b[nf] - Afc @ x1
+        bc = np.vstack((b2[:, None], bf[:, None]))
         # Solve the reduced system
         x = spsolve(A2, bc)
         # Build the full solution vector
         xx = np.zeros((self.num_dofs,), dtype=complex)
-        xx[nc] = x1 + Q2@x[:len(b2)]
-        xx[nf] = x[len(b2):]
+        xx[nc] = x1 + Q2 @ x[: len(b2)]
+        xx[nf] = x[len(b2) :]
         return xx

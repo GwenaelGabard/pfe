@@ -75,11 +75,13 @@ class Impedance:
         """
         basis = model.fields["phi"].basis(e)
         geometry = self.domain.element_geometry(e)
-        quad_order = 8 * basis.order  # to change to evaluate the impact of the quadrature order
+        quad_order = (
+            8 * basis.order
+        )  # to change to evaluate the impact of the quadrature order
         u, weights = geometry.integration(quad_order)
         xr = geometry.position(u)
         _, r = xr
-        weights *= 2*np.pi*r
+        weights *= 2 * np.pi * r
         tau = geometry.tangent(u)
         phi, dphidtau = geometry.basis_from_order(basis, quad_order)
         omega = model.parameters["omega"].get_value()
@@ -87,10 +89,10 @@ class Impedance:
         c0 = model.parameters["c0"].get_value(e, u, xr)
         v0 = model.parameters["v0"].get_value(e, u, xr)
         rho0 = model.parameters["rho0"].get_value(e, u, xr)
-        inv_Z = 1/self.Z.get_value(e, u, xr)
+        inv_Z = 1 / self.Z.get_value(e, u, xr)
         u0tau = u0 * tau[:, 0] + v0 * tau[:, 1]
         D0phiDt = 1j * omega * phi + u0tau[:, None] * dphidtau
         Ke = D0phiDt.T.conj() @ (
-            (weights * rho0 ** 2 * inv_Z / 1j / omega)[:, None] * D0phiDt
+            (weights * rho0**2 * inv_Z / 1j / omega)[:, None] * D0phiDt
         )
         return Ke

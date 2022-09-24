@@ -75,7 +75,7 @@ class Main:
 
         D0phiDt = 1j * omega * phi + u0[:, None] * dphidx + v0[:, None] * dphidy
         Ke = (
-            D0phiDt.T.conj() @ ((weights * rho0 / c0 ** 2)[:, None] * D0phiDt)
+            D0phiDt.T.conj() @ ((weights * rho0 / c0**2)[:, None] * D0phiDt)
             - dphidx.T @ ((weights * rho0)[:, None] * dphidx)
             - dphidy.T @ ((weights * rho0)[:, None] * dphidy)
         )

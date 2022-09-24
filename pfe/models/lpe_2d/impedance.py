@@ -94,6 +94,6 @@ class Impedance:
         u0tau = u0 * tau[:, 0] + v0 * tau[:, 1]
         D0phiDt = 1j * omega * phi + u0tau[:, None] * dphidtau
         Ke = D0phiDt.T.conj() @ (
-            (weights * rho0 ** 2 / Z / 1j / omega)[:, None] * D0phiDt
+            (weights * rho0**2 / Z / 1j / omega)[:, None] * D0phiDt
         )
         return Ke

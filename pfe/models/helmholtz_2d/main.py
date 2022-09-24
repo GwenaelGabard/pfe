@@ -72,7 +72,7 @@ class Main:
         k = omega / c0
 
         Ke = (
-            p.T() @ np.diag(weights * k ** 2) @ p
+            p.T() @ np.diag(weights * k**2) @ p
             - dpdx.T() @ np.diag(weights) @ dpdx
             - dpdy.T() @ np.diag(weights) @ dpdy
         )

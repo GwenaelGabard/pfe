@@ -22,7 +22,7 @@ class Basis:
 
     def prepare(self):
         if self.Ri == 0.0:
-            self.kr = jnp_zeros(self.mode_m, self.num_modes)/self.Ro
+            self.kr = jnp_zeros(self.mode_m, self.num_modes) / self.Ro
             if self.mode_m == 0:
                 self.kr[1:] = self.kr[:-1]
                 self.kr[0] = 0.0
@@ -55,18 +55,19 @@ class Basis:
         """
         k_o = np.conj(
             (
-                self.c0 * sqrt(self.omega ** 2 - (self.c0 ** 2 - self.u0n ** 2) * self.kr ** 2)
+                self.c0
+                * sqrt(self.omega**2 - (self.c0**2 - self.u0n**2) * self.kr**2)
                 - self.u0n * self.omega
             )
-            / (self.c0 ** 2 - self.u0n ** 2)
+            / (self.c0**2 - self.u0n**2)
         )
         k_i = np.conj(
             (
                 -self.c0
-                * sqrt(self.omega ** 2 - (self.c0 ** 2 - self.u0n ** 2) * self.kr ** 2)
+                * sqrt(self.omega**2 - (self.c0**2 - self.u0n**2) * self.kr**2)
                 - self.u0n * self.omega
             )
-            / (self.c0 ** 2 - self.u0n ** 2)
+            / (self.c0**2 - self.u0n**2)
         )
         if self.Ri == 0.0:
             psi = jv(self.mode_m, np.outer(y, self.kr))
@@ -85,7 +86,7 @@ class Basis:
         :rtype: A tuple of two Numpy arrays
         """
         if self.Ri == 0.0:
-            psi = self.kr[None,:]*jvp(self.mode_m, np.outer(y, self.kr))
+            psi = self.kr[None, :] * jvp(self.mode_m, np.outer(y, self.kr))
         return (psi, psi)
 
     def norms(self):
@@ -95,14 +96,19 @@ class Basis:
         :rtype: A tuple of two Numpy arrays
         """
         Q = np.ones((self.num_modes,))
-        if self.Ri==0:
+        if self.Ri == 0:
             for n in range(self.num_modes):
                 kr = self.kr[n]
-                if kr==0:
-                    Q[n] = self.Ro**2/2
+                if kr == 0:
+                    Q[n] = self.Ro**2 / 2
                 else:
-                    Q[n] = (1-self.mode_m**2/(kr*self.Ro)**2)*self.Ro**2*jv(self.mode_m, kr*self.Ro)**2/2
-        N = np.diag(2*np.pi*Q)
+                    Q[n] = (
+                        (1 - self.mode_m**2 / (kr * self.Ro) ** 2)
+                        * self.Ro**2
+                        * jv(self.mode_m, kr * self.Ro) ** 2
+                        / 2
+                    )
+        N = np.diag(2 * np.pi * Q)
         return (N, N)
 
 
@@ -132,8 +138,8 @@ class DuctModes:
         # Compute the width and center of the boundary
         # We assume that the surface is flat
         nodes = self.domain.nodes()
-        self.basis.Ri = np.min(nodes[1,:])
-        self.basis.Ro = np.max(nodes[1,:])
+        self.basis.Ri = np.min(nodes[1, :])
+        self.basis.Ro = np.max(nodes[1, :])
         D = squareform(pdist(nodes.T))
         n1, n2 = np.unravel_index(np.argmax(D), D.shape)
         self.basis.xc = (nodes[:, n1] + nodes[:, n2]) / 2
@@ -205,7 +211,7 @@ class DuctModes:
         u, weights = geometry.integration(quad_order)
         xy = geometry.position(u)
         x, y = xy
-        weights *= 2*np.pi*y
+        weights *= 2 * np.pi * y
         tau = geometry.tangent(u)
         n = geometry.normal(u)
         phi, _ = geometry.basis_from_order(basis, quad_order)
@@ -221,16 +227,16 @@ class DuctModes:
         dphidtau_o, dphidtau_i = self.basis.dphidtau(x, y)
         if self.modes_i is not None:
             F1 = (
-                phi.T @ ((1j * omega * weights * rho0 * u0n / c0 ** 2)[:, None] * phi_i)
+                phi.T @ ((1j * omega * weights * rho0 * u0n / c0**2)[:, None] * phi_i)
                 + phi.T
-                @ ((weights * rho0 * u0n * u0tau / c0 ** 2)[:, None] * dphidtau_i)
+                @ ((weights * rho0 * u0n * u0tau / c0**2)[:, None] * dphidtau_i)
                 - phi.T @ ((weights * rho0 * (1 - (u0n / c0) ** 2))[:, None] * dphidn_i)
             ) @ self.modes_i
         else:
             F1 = None
         K12 = (
-            -phi.T @ ((1j * omega * weights * rho0 * u0n / c0 ** 2)[:, None] * phi_o)
-            - phi.T @ ((weights * rho0 * u0n * u0tau / c0 ** 2)[:, None] * dphidtau_o)
+            -phi.T @ ((1j * omega * weights * rho0 * u0n / c0**2)[:, None] * phi_o)
+            - phi.T @ ((weights * rho0 * u0n * u0tau / c0**2)[:, None] * dphidtau_o)
             + phi.T @ ((weights * rho0 * (1 - (u0n / c0) ** 2))[:, None] * dphidn_o)
         )
         K21 = -phi_o.T @ (weights[:, None] * phi)

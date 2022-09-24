@@ -324,5 +324,7 @@ class Mesh:
 
     def plot(self):
         for s in self.storage:
-            n = np.hstack((s.nodes, s.nodes[:,0][:,None])).T
-            plt.plot(self.coordinates[0,n], self.coordinates[1,n], 'k-', linewidth=0.1)
+            n = np.hstack((s.nodes, s.nodes[:, 0][:, None])).T
+            plt.plot(
+                self.coordinates[0, n], self.coordinates[1, n], "k-", linewidth=0.1
+            )

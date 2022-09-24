@@ -66,18 +66,18 @@ class Basis:
         k_tau = m * np.pi / self.H
         k_o = np.conj(
             (
-                self.c0 * sqrt(omega ** 2 - (self.c0 ** 2 - self.u0n ** 2) * k_tau ** 2)
+                self.c0 * sqrt(omega**2 - (self.c0**2 - self.u0n**2) * k_tau**2)
                 - self.u0n * omega
             )
-            / (self.c0 ** 2 - self.u0n ** 2)
+            / (self.c0**2 - self.u0n**2)
         )
         k_i = np.conj(
             (
                 -self.c0
-                * sqrt(omega ** 2 - (self.c0 ** 2 - self.u0n ** 2) * k_tau ** 2)
+                * sqrt(omega**2 - (self.c0**2 - self.u0n**2) * k_tau**2)
                 - self.u0n * omega
             )
-            / (self.c0 ** 2 - self.u0n ** 2)
+            / (self.c0**2 - self.u0n**2)
         )
         psi = np.cos(np.outer(tau, k_tau))
         psi_o = -1j * k_o[None, :] * psi
@@ -219,16 +219,16 @@ class DuctModes:
         dphidtau_o, dphidtau_i = self.basis.dphidtau(x, y, omega)
         if self.modes_i is not None:
             F1 = (
-                phi.T @ ((1j * omega * weights * rho0 * u0n / c0 ** 2)[:, None] * phi_i)
+                phi.T @ ((1j * omega * weights * rho0 * u0n / c0**2)[:, None] * phi_i)
                 + phi.T
-                @ ((weights * rho0 * u0n * u0tau / c0 ** 2)[:, None] * dphidtau_i)
+                @ ((weights * rho0 * u0n * u0tau / c0**2)[:, None] * dphidtau_i)
                 - phi.T @ ((weights * rho0 * (1 - (u0n / c0) ** 2))[:, None] * dphidn_i)
             ) @ self.modes_i
         else:
             F1 = None
         K12 = (
-            -phi.T @ ((1j * omega * weights * rho0 * u0n / c0 ** 2)[:, None] * phi_o)
-            - phi.T @ ((weights * rho0 * u0n * u0tau / c0 ** 2)[:, None] * dphidtau_o)
+            -phi.T @ ((1j * omega * weights * rho0 * u0n / c0**2)[:, None] * phi_o)
+            - phi.T @ ((weights * rho0 * u0n * u0tau / c0**2)[:, None] * dphidtau_o)
             + phi.T @ ((weights * rho0 * (1 - (u0n / c0) ** 2))[:, None] * dphidn_o)
         )
         K21 = -phi_o.T @ (weights[:, None] * phi)
