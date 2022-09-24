@@ -9,6 +9,12 @@ The following elements are available:
 Two dimensions
 --------------
 
+Point (1 node)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. autoclass:: pfe.geometry.Point
+   :members:
+
 Quadratic line (3 nodes)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -24,5 +30,6 @@ Quadratic triangle (6 nodes)
 
 from .line3_2d import Line3_2D
 from .triangle6_2d import Triangle6_2D
+from .point import Point
 
-__all__ = ["Line3_2D", "Triangle6_2D"]
+__all__ = ["Line3_2D", "Triangle6_2D", "Point"]

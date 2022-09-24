@@ -3,10 +3,10 @@ import numpy as np
 import gmsh
 from scipy.spatial import KDTree
 import matplotlib.pyplot as plt
-from pfe.geometry import Line3_2D, Triangle6_2D
+from pfe.geometry import Line3_2D, Triangle6_2D, Point
 
 
-from_type = {9: Triangle6_2D, 8: Line3_2D}
+from_type = {9: Triangle6_2D, 8: Line3_2D, 15: Point}
 
 
 class ElementType:
