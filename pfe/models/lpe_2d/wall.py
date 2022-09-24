@@ -38,6 +38,6 @@ class Wall:
 
         :param model: The finite-element model
         :type model: An instance of pfe.Model
-        :param system: The algebraic system ton contribute to
+        :param system: The algebraic system to contribute to
         :type system: An instance of a class from pfe.algebra
         """
