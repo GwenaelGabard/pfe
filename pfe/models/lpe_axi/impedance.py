@@ -3,7 +3,8 @@ import numpy as np
 
 
 class Impedance:
-    r"""Implements the Myers impedance boundary condition for the Linearised Potential Equation in cylindrical coordinates:
+    r"""Implements the Myers impedance boundary condition for the Linearised
+    Potential Equation in cylindrical coordinates:
 
     .. math::
 
@@ -14,9 +15,11 @@ class Impedance:
     where :math:`Z` is the acoustic impedance of the boundary :math:`\Gamma`.
     The mean flow is assumed to be tangential to the boundary:
     :math:`\mathbf{u}_0\cdot\mathbf{n}=0`.
-    This boundary condition was proposed in :cite:`myers80` and assumes an infinitely thin boundary layer above the acoustic treatment.
+    This boundary condition was proposed in :cite:`myers80` and assumes an
+    infinitely thin boundary layer above the acoustic treatment.
 
-    To implement this boundary condition, the following term is added to the left-hand side of the linear system:
+    To implement this boundary condition, the following term is added to the
+    left-hand side of the linear system:
 
     .. math::
 
@@ -27,7 +30,9 @@ class Impedance:
     where :math:`\psi` is the test function.
     This formulation is the one proposed by Eversman :cite:`eversman01`.
 
-    In the following code snippet we apply this boundary condition with a constant impedance :math:`1-\mathrm{i}/2` on the boundary defined as the mesh group 2:
+    In the following code snippet we apply this boundary condition with a
+    constant impedance :math:`1-\mathrm{i}/2` on the boundary defined as the
+    mesh group 2:
 
     .. code-block:: python
 
@@ -86,7 +91,6 @@ class Impedance:
         phi, dphidtau = geometry.basis_from_order(basis, quad_order)
         omega = model.parameters["omega"].get_value()
         u0 = model.parameters["u0"].get_value(e, u, xr)
-        c0 = model.parameters["c0"].get_value(e, u, xr)
         v0 = model.parameters["v0"].get_value(e, u, xr)
         rho0 = model.parameters["rho0"].get_value(e, u, xr)
         inv_Z = 1 / self.Z.get_value(e, u, xr)
