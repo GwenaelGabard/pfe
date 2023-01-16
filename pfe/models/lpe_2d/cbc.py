@@ -1,25 +1,24 @@
 """Characteristics boundary condition for the LPE in 2D"""
-import numpy as np
 from pfe.constant import Constant
 
 
 class CBC:
     r"""Implements a characteristic boundary condition for the Linearised Potential
     Equation in 2D.
-    This condition allows to specify the incoming characteristic of the solution which in the
-    following way:
+    This condition allows to specify the incoming characteristic of the 
+    solution which in the following way:
 
     .. math::
 
        \frac{\partial\phi}{\partial n} + \mathrm{i}k^+\phi = g \;,
 
     where :math:`n` is the outgoing normal on the boundary :math:`\Gamma`.
-    The wavenumber :math:`k^+=\omega/(c_0+\mathbf{u}_0\cdot\mathbf{n})` is that of the
-    outgoing plane wave normal to the boundary.
+    The wavenumber :math:`k^+=\omega/(c_0+\mathbf{u}_0\cdot\mathbf{n})` is that 
+    of the outgoing plane wave normal to the boundary.
     The source term :math:`g` specifies the incoming characteristics.
 
-    To implement this boundary condition, the following term is added to the left-hand side
-    of the linear system:
+    To implement this boundary condition, the following term is added to the 
+    left-hand side of the linear system:
 
     .. math::
 

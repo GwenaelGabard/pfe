@@ -1,5 +1,4 @@
 """Main terms for the LPE in 2D"""
-import numpy as np
 
 
 class Main:

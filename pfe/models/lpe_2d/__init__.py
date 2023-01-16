@@ -126,6 +126,7 @@ Characteristic boundary condition
 References
 ----------
 .. bibliography:: references.bib
+
 """
 
 from .main import Main

@@ -1,5 +1,4 @@
 """Myers impedance condition for the LPE in 2D"""
-import numpy as np
 
 
 class Impedance:
