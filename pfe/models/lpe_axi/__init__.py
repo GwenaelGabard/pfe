@@ -2,14 +2,17 @@ r"""
 Linearized Potential Equation (AXI)
 ===================================
 
-The module ``lpe_axi`` provides an implementation of the Linearised Potential Equation (LPE) in cylindrical coordinates.
+The module ``lpe_axi`` provides an implementation of the Linearised Potential 
+Equation (LPE) in cylindrical coordinates.
 
 Theory
 ------
 
-This equation describes the propagation of linear sound waves in a steady, potential base flow.
+This equation describes the propagation of linear sound waves in a steady, 
+potential base flow.
 The sound field is described by the velocity potential :math:`\phi`.
-The base flow is defined by the mean density :math:`\rho_0(\mathbf{x})`, the sound speed
+The base flow is defined by the mean density :math:`\rho_0(\mathbf{x})`, the 
+sound speed
 :math:`c_0(\mathbf{x})` and the mean velocity :math:`\mathbf{u}_0(\mathbf{x})`.
 We therefore assume that the mean flow velocity satisfies
 :math:`\nabla\times\mathbf{u}_0=\mathbf{0}`.
@@ -21,7 +24,8 @@ The Linearised Potential Equation (LPE) reads
     \nabla \cdot ( \rho_0 \nabla \phi ) = 0\;,
 
 where :math:`\mathrm{D}_0\phi/\mathrm{D}t=\partial\phi/\partial t +
-\mathbf{u}_0\cdot\nabla\phi` is the material derivative with respect to the base flow.
+\mathbf{u}_0\cdot\nabla\phi` is the material derivative with respect to the 
+base flow.
 This model is solved in the frequency domain using the implicit time dependence
 :math:`\exp(+\mathrm{i}\omega t)`.
 We therefore have :math:`\mathrm{D}_0\phi/\mathrm{D}t=\mathrm{i}\omega\phi +
@@ -33,9 +37,11 @@ In cylindrical coordinates, the velocity potential is of the form
 
 where :math:`m` is the azimuthal order.
 
-This propagation model is a simplified version of the theory developped by Goldstein :cite:`goldstein78` without the entropy and vortical disturbances.
+This propagation model is a simplified version of the theory developped by 
+Goldstein :cite:`goldstein78` without the entropy and vortical disturbances.
 
-From the knowledge of the velocity potential :math:`\phi`, one can recover other acoustic quantities:
+From the knowledge of the velocity potential :math:`\phi`, one can recover 
+other acoustic quantities:
 
 * The acoustic velocity :math:`\mathbf{u}=\nabla\phi`.
 * The acoustic pressure :math:`p=-\rho_0\mathrm{D}_0\phi/\mathrm{D}t`.
@@ -58,7 +64,8 @@ These are described below in details.
 Implementation
 --------------
 
-This formulation requires the definition of the following quantities as parameters in the model
+This formulation requires the definition of the following quantities as 
+parameters in the model
 (i.e. in the dictionary ``model.parameters``):
 
 ==========================================================  ==============  =================
@@ -125,6 +132,7 @@ Duct modes boundary
 References
 ----------
 .. bibliography:: references.bib
+
 """
 
 from .main import Main
@@ -132,5 +140,14 @@ from .wall import Wall
 from .impedance import Impedance
 from .velocity import Velocity
 from .duct_modes import DuctModes
+from .axis import Axis
 
-__all__ = ["Main", "Wall", "Impedance", "Velocity", "DuctModes", "Impedance"]
+__all__ = [
+    "Main",
+    "Wall",
+    "Impedance",
+    "Velocity",
+    "DuctModes",
+    "Impedance",
+    "Axis",
+]
