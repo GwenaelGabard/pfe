@@ -2,11 +2,11 @@
 import numpy as np
 import gmsh
 from scipy.spatial import KDTree
-import matplotlib.pyplot as plt
 from pfe.geometry import Line3_2D, Triangle6_2D, Point
 
 
 from_type = {9: Triangle6_2D, 8: Line3_2D, 15: Point}
+main_nodes = {9: [0, 1, 2], 8: [0, 1], 15: [0]}
 
 
 class ElementType:
@@ -101,7 +101,7 @@ class Mesh:
         :param filename: The name of the msh file
         :type filename: A string
         """
-        print("Opening mesh {}".format(filename))
+        print(f"Opening mesh {filename}")
         gmsh.initialize()
         gmsh.option.setNumber("General.Terminal", 0)
 
@@ -113,7 +113,7 @@ class Mesh:
         num_nodes = len(tags)
         coordinates = coordinates.reshape(num_nodes, 3)
         self.coordinates = coordinates[:, 0 : self.num_dim].T
-        print("Reading {} nodes".format(self.coordinates.shape[1]))
+        print(f"Reading {self.coordinates.shape[1]} nodes")
 
         # Read all the elements
         types, tags, elements = gmsh.model.mesh.getElements()
@@ -126,7 +126,7 @@ class Mesh:
             e.nodes = elements[n].reshape(len(e.tags), e.num_nodes) - 1
             self.storage.append(e)
         for t in self.storage:
-            print("* {} elements {}".format(len(t.tags), t.name))
+            print(f"* {len(t.tags)} elements {t.name}")
 
         max_tag = 0
         for n, s in enumerate(self.storage):
@@ -156,7 +156,7 @@ class Mesh:
                     ).flatten()
         for n, g in enumerate(self.groups):
             if g is not None:
-                print("* group {}: {} elements".format(n, g.shape[0]))
+                print(f"* group {n}: {g.shape[0]} elements")
 
         self.create_node_tags()
 
@@ -299,10 +299,17 @@ class Mesh:
         :return: The containing element and reference coordinates for each point
         :rtype: An instance of the Probes class
         """
+        # Number of points to locate
         num_points = points.shape[1]
-        p = self.nodes().T
-        _, n = KDTree(p).query(points.T)
-        nodes = self.node_tags[n]
+        # Create a list of main points (i.e. no mid-side nodes) in the mesh
+        main = []
+        for s in self.storage:
+            main.append(np.unique(s.nodes[:, main_nodes[s.id]].flatten()))
+        main = np.unique(np.hstack(main))
+        # Create a KD tree with the main points and query it to find the nearest points
+        _, n = KDTree(self.nodes()[:, main].T).query(points.T)
+        # For each field point check the identified elements
+        nodes = self.node_tags[main[n]]
         elements = np.full((num_points,), -1, dtype=np.int32)
         positions = [None] * num_points
         for i in range(num_points):
@@ -315,16 +322,10 @@ class Mesh:
                         elements[i] = tag
                         positions[i] = uvw
                         break
+        # Build the output structure
         probes = Probes()
         probes.mesh = self
         probes.coordinates = points
         probes.elements = elements
         probes.positions = positions
         return probes
-
-    def plot(self):
-        for s in self.storage:
-            n = np.hstack((s.nodes, s.nodes[:, 0][:, None])).T
-            plt.plot(
-                self.coordinates[0, n], self.coordinates[1, n], "k-", linewidth=0.1
-            )
