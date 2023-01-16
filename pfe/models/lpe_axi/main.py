@@ -74,12 +74,13 @@ class Main:
         v0 = model.parameters["v0"].get_value(e, uv, xr)
         c0 = model.parameters["c0"].get_value(e, uv, xr)
         rho0 = model.parameters["rho0"].get_value(e, uv, xr)
+        weights *= rho0
 
         D0phiDt = 1j * omega * phi + u0[:, None] * dphidx + v0[:, None] * dphidy
         Ke = (
-            D0phiDt.T.conj() @ ((weights * rho0 / c0**2)[:, None] * D0phiDt)
-            - dphidx.T.conj() @ ((weights * rho0)[:, None] * dphidx)
-            - dphidy.T.conj() @ ((weights * rho0)[:, None] * dphidy)
-            - m**2 * phi.T.conj() @ ((weights * rho0 / r**2)[:, None] * phi)
+            D0phiDt.T.conj() @ ((weights / c0**2)[:, None] * D0phiDt)
+            - dphidx.T.conj() @ (weights[:, None] * dphidx)
+            - dphidy.T.conj() @ (weights[:, None] * dphidy)
+            - phi.T.conj() @ ((weights * m**2 / r**2)[:, None] * phi)
         )
         return Ke
