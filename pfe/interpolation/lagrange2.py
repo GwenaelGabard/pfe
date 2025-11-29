@@ -148,7 +148,7 @@ class Lagrange2:
             return values
         return None
 
-    def plot(self, solution=None):
+    def plot(self, solution=None, levels=None):
         """Generate a plot of the field on the mesh
 
         :param solution: The values of the degrees of freedom
@@ -171,8 +171,11 @@ class Lagrange2:
             x, y = self.domain.coordinates
         tri = matplotlib.tri.Triangulation(x, y, T)
         values = solution[self.dofs]
-        plt.tricontourf(tri, values)
-        return tri
+        if levels is not None:
+            c = plt.tricontourf(tri, values, levels=levels)
+        else:
+            c = plt.tricontourf(tri, values)
+        return c
 
     def sample(self, probes, solution):
         """Compute the values of the field at several points
